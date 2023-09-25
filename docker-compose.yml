@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_todo
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 111
+    ports:
+      - "5433:5432"
+
+  todo-app:
+    build: .
+    container_name: todo_app
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgresql://postgres:111@postgres:5432/postgres
